@@ -64,7 +64,7 @@ TechStreamPrueba/
 Ejecutar los scripts en el siguiente orden
 
 1. Generar los datos sintéticos  
-python generar_datos.py  
+python generador_datos_sensores.py 
 
 2. Exploratory Data Analisis de los datos generados  
 python eda.py  
