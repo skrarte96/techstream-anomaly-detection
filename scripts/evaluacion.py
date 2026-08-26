@@ -12,7 +12,7 @@ from sklearn.metrics import (
     roc_auc_score,
     roc_curve
 )
-from dataset import SensoresDataset
+from dataset import ServidoresDataset
 from modelo import MLPDetectorFallos
 from torch.utils.data import DataLoader
 
@@ -31,7 +31,7 @@ datos = torch.load('tensores.pt')
 
 # Cargamos los datos del dataset test
 test_loader = DataLoader(
-    SensoresDataset(datos['X_test'], datos['y_test']),
+    ServidoresDataset(datos['X_test'], datos['y_test']),
     batch_size=32, shuffle=False
 )
 
@@ -46,7 +46,7 @@ with torch.no_grad():
         # Cargamos datos de features al dispositivo
         X_batch = X_batch.to(device)
 
-        # Calculamos las probabilidades de fallo del sensor
+        # Calculamos las probabilidades de fallo del servidor
         logits = modelo(X_batch)
         probs = torch.sigmoid(logits)
 
@@ -119,5 +119,6 @@ plt.suptitle('Evaluación del modelo — Test set', fontsize=13, y=1.01)
 plt.savefig('../imagenes/matriz_confusion_y_curva_roc.png', dpi=150, bbox_inches='tight')
 
 #NOTA: El modelo predice a la perfección los resultados, algo de esperar debido al pequeño solapamiento entre las
-# distribuciones de los sensores normales y con fallos, así como la alta correlación entre las features y la etiqueta
+# distribuciones de los servidores normales y con fallos, así como la alta correlación entre las features y la etiqueta
 # fallo.
+

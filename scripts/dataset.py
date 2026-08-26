@@ -5,7 +5,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 
 # Creamos una clase de dataset personalizada
-class SensoresDataset(Dataset):
+class ServidoresDataset(Dataset):
 
     def __init__(self, X, y):
         # Accedemos a los tensores X e y de preprocesamiento.py
@@ -28,9 +28,9 @@ if __name__ == '__main__':
     datos = torch.load('tensores.pt')
 
     # Creamos los datasets train, validación y test
-    train_dataset = SensoresDataset(datos['X_train'], datos['y_train'])
-    val_dataset = SensoresDataset(datos['X_val'], datos['y_val'])
-    test_dataset = SensoresDataset(datos['X_test'], datos['y_test'])
+    train_dataset = ServidoresDataset(datos['X_train'], datos['y_train'])
+    val_dataset = ServidoresDataset(datos['X_val'], datos['y_val'])
+    test_dataset = ServidoresDataset(datos['X_test'], datos['y_test'])
 
     # Vemos si las length de nuestros datasets se corresponden con las esperadas
     print(f"Número muestras en train: {len(train_dataset)}")

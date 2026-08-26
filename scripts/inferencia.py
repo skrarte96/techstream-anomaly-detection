@@ -10,7 +10,7 @@ import joblib
 from sklearn.model_selection import train_test_split
 
 # Cargamos nuestros datos generados
-datos_raw = pd.read_csv('../datos/datos_sensores.csv')
+datos_raw = pd.read_csv('../datos/datos_servidores.csv')
 features = ['cpu_uso', 'temperatura', 'memoria_uso', 'trafico_red']
 
 X = datos_raw[features].values
@@ -53,7 +53,7 @@ def predecir(cpu, temperatura, memoria, trafico):
 
 # Ejemplo
 print('Ejemplo de usos')
-# Casos inventados para distintos estados de sensores
+# Casos inventados para distintos estados de servidores
 casos = [
     # (cpu,  temp, mem,  red,   descripción)
     (28.0,  43.0, 52.0,  95.0, "Servidor en reposo"),
@@ -67,5 +67,14 @@ for cpu, temp, mem, red, descripcion in casos:
     pred, prob = predecir(cpu, temp, mem, red)
     estado = "FALLO" if pred == 1 else "NORMAL"
     print(f"{descripcion}")
-    print(f"Sensores con CPU: {cpu}%, Temp: {temp}°C, Mem: {mem}% y Red: {red} Mbps")
+    print(f"Servidores con CPU: {cpu}%, Temp: {temp}°C, Mem: {mem}% y Red: {red} Mbps")
     print(f"Predicción: {estado} y Probabilidad de fallo: {prob:.4f}")
+
+
+#Carga moderada
+#Servidores con CPU: 45.0%, Temp: 55.0°C, Mem: 70.0% y Red: 150.0 Mbps
+#Predicción: NORMAL y Probabilidad de fallo: 0.0002
+
+#Zona intermedia — ambiguo
+#Servidores con CPU: 60.0%, Temp: 65.0°C, Mem: 75.0% y Red: 280.0 Mbps
+#Predicción: FALLO y Probabilidad de fallo: 0.9935

@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 import torch
 
 # Cargamos la DataFrame
-df = pd.read_csv('../datos/datos_sensores.csv')
+df = pd.read_csv('../datos/datos_servidores.csv')
 
 # Conocemos las features, si no columnas = [col for col in df.columns if col != 'Fallo']
 features = ['cpu_uso', 'temperatura', 'memoria_uso', 'trafico_red']
@@ -25,8 +25,8 @@ n_normales = (y == 0).sum()
 n_fallos = (y == 1).sum()
 ratio = n_normales / n_fallos
 
-print(f"Clase 0, sensores normales: {n_normales}")
-print(f"Clase 1, sensores con fallo: {n_fallos}")
+print(f"Clase 0, servidores normales: {n_normales}")
+print(f"Clase 1, servidores con fallo: {n_fallos}")
 print(f"Ratio 0/1: {ratio:.2f}")
 
 # Peso para corregir el desbalanceo en Pytorch, usaremos el ratio

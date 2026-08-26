@@ -4,10 +4,10 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from dataset import SensoresDataset
+from dataset import ServidoresDataset
 from modelo import MLPDetectorFallos
 import matplotlib.pyplot as plt
-
+torch.manual_seed(42)
 # En el hipotético caso de que se pueda ejecutar en GPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Usando dispositivo: {device}")
@@ -17,12 +17,12 @@ datos = torch.load('tensores.pt')
 
 # Cargamos los datasets de train
 train_loader = DataLoader(
-    SensoresDataset(datos['X_train'], datos['y_train']),
+    ServidoresDataset(datos['X_train'], datos['y_train']),
     batch_size=32, shuffle=True
 )
 # Cargamos los datasets de validación
 val_loader = DataLoader(
-    SensoresDataset(datos['X_val'], datos['y_val']),
+    ServidoresDataset(datos['X_val'], datos['y_val']),
     batch_size=32, shuffle=False
 )
 
@@ -30,7 +30,7 @@ val_loader = DataLoader(
 modelo = MLPDetectorFallos(input_dim=4, dropout_rate=0.3).to(device)
 
 # Elegimos como función de pérdida BCEWithLogitsLoss
-# Aplicamos el mayor peso a sensores que presentan fallo calculado en preprocesamiento.py
+# Aplicamos el mayor peso a servidores que presentan fallo calculado en preprocesamiento.py
 pos_weight = datos['pos_weight'].to(device)
 criterio = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
 
@@ -63,7 +63,7 @@ def train_epoch(modelo, loader, criterio, optimizador, device):
         predicciones = modelo(X_batch)
         # Calculamos pérdida
         perdida = criterio(predicciones, y_batch)
-        # Backward pass
+        # Backward pass: calcula gradientes
         perdida.backward()
         # Actualizamos los pesos
         optimizador.step()
@@ -103,7 +103,7 @@ max_paciencia = 10
 paciencia_actual = 0
 
 # Definimos una tabla para los valores de epoch, y las pérdidas en train y validación
-print(f"{'Epoch':>6} | {'Train Pérdida':>10} | {'Val Pérdida':>10} | {'lr actual':>10}")
+print(f"{'Epoch':>6} | {'Train Pérdida':>14} | {'Val Pérdida':>14} | {'lr actual':>14}")
 
 for epoch in range(1, n_epochs + 1):
     # Pérdida en train
@@ -119,7 +119,7 @@ for epoch in range(1, n_epochs + 1):
     scheduler.step(perdida_val)
     lr_actual = optimizador.param_groups[0]['lr']
     # Representamos valores de pérdidas de la tabla mencionada anteriormente
-    print(f"{epoch:>6} | {perdida_train:>10.4f} | {perdida_val:>10.4f} | {lr_actual:.6f}")
+    print(f"{epoch:>6} | {perdida_train:>14.4f} | {perdida_val:>14.4f} | {lr_actual:>14.6f}")
 
     # Paramos antes de tiempo si en 10 epochs la pérdida no mejora. Guardamos modelo con mejor pérdida en
     # la fase de validación
@@ -135,14 +135,6 @@ for epoch in range(1, n_epochs + 1):
             break
 
 print(f"Mejor pérdida de validación: {mejor_perdida_val:.4f}")
-
-# ── Curvas de aprendizaje ─────────────────────────────────────────────
-# Las curvas de aprendizaje son el diagnóstico visual más importante
-# del entrenamiento. Lo que buscamos:
-#   - Ambas curvas bajando: el modelo está aprendiendo
-#   - Val >> Train: overfitting (el modelo memoriza, no generaliza)
-#   - Ambas curvas altas: underfitting (el modelo es demasiado simple)
-#   - Ambas curvas bajas y cercanas: situación ideal
 
 # Representamos curvas de aprendizaje
 fig, ax = plt.subplots(figsize=(9, 5))

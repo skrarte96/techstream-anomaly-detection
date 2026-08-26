@@ -15,4 +15,7 @@ env/
 .ipynb_checkpoints/
 
 # macOS
+.DS_Store.DS_Store
+*.mov
+*.zip
 .DS_Store

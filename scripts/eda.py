@@ -1,4 +1,4 @@
-# Exploratory Data Analysis de los datos generados en el programa generador_datos_sensores.py
+# Exploratory Data Analysis de los datos generados en el programa generador_datos_servidores.py
 #
 # Importamos las librerías
 import pandas as pd
@@ -12,7 +12,7 @@ ruta_datos = Path(__file__).resolve().parent.parent / 'imagenes'
 ruta_datos.mkdir(exist_ok=True)
 
 # Carga el csv de los anteriores datos generados
-df = pd.read_csv('../datos/datos_sensores.csv')
+df = pd.read_csv('../datos/datos_servidores.csv')
 
 # Breve exploración de la DataFrame
 # Información de la DataFrame
@@ -31,16 +31,16 @@ features = ['cpu_uso', 'temperatura', 'memoria_uso', 'trafico_red']
 
 # Diccionario de títulos por cada valor es el título de la feature para su ploteo en las figuras
 titulos = {f: f.replace('_', ' ').title() for f in features}
-# Colores para los dos tipos de sensores
+# Colores para los dos tipos de servidores
 # Fallo = 0 (Normal - Azul) | Fallo = 1 (Fallo - Rojo)
 colores = {0: 'steelblue', 1: 'tomato'}
 
-# Figura 1: Histograma de features de sensores por tipo (Fallo | Normal)
-# Histograma de cada una de las features agrupadas por las dos clases de sensores. Asi vemos cuanto solapan los
+# Figura 1: Histograma de features de servidores por tipo (Fallo | Normal)
+# Histograma de cada una de las features agrupadas por las dos clases de servidores. Asi vemos cuanto solapan los
 # valores de las features.
 # subplot de 2x2 al ser 4 features
 fig, axes = plt.subplots(2, 2, figsize=(12, 8))
-fig.suptitle('Distribución de cada feature por tipo de sensor (Fallo | Normal)', fontsize=14)
+fig.suptitle('Distribución de cada feature por tipo de servidor (Fallo | Normal)', fontsize=14)
 
 # Iteramos sobre los 4 subgráficos, uno para cada feature
 for ax, feat in zip(axes.flatten(), features):
@@ -63,13 +63,13 @@ plt.tight_layout()
 # Guarda la figura en la carpeta imagenes
 plt.savefig('../imagenes/eda_histogramas.png', dpi=150, bbox_inches='tight')
 
-# NOTA: hay buena separación en la distribución de valores en las cuatro features respecto a los dos tipos de sensores
+# NOTA: hay buena separación en la distribución de valores en las cuatro features respecto a los dos tipos de servidores
 
-#Figura 2: Boxplots de las dos clases de sensores para cada feature.
+#Figura 2: Boxplots de las dos clases de servidores para cada feature.
 
 # De nuevo 4 subgráficos para cada feature
 fig, axes = plt.subplots(2, 2, figsize=(12, 8))
-fig.suptitle('Boxplots de cada clase de sensor para cada feature', fontsize=14)
+fig.suptitle('Boxplots de cada clase de servidor para cada feature', fontsize=14)
 
 # Iteramos para cada subgráfico
 for ax, feat in zip(axes.flatten(), features):
@@ -98,10 +98,10 @@ for ax, feat in zip(axes.flatten(), features):
 plt.tight_layout()
 plt.savefig('../imagenes/eda_boxplots.png', dpi=150, bbox_inches='tight')
 
-# NOTA: Vemos, al igual que en los histogramas que los valores de los sensores que presentan fallos son mucho más altos
-# que los sensores normales. Todas las medianas de los sensores con fallos son más altas que los normales.
+# NOTA: Vemos, al igual que en los histogramas que los valores de los servidores que presentan fallos son mucho más altos
+# que los servidores normales. Todas las medianas de los servidores con fallos son más altas que los normales.
 # Podemos ver que hay más diferencia entre las medianas de tráfico de red y cpu_uso con respecto a las otras features.
-# De aquí ya tenemos una idea de qué features van a tener más peso a la hora de clasificar sensores entre normales
+# De aquí ya tenemos una idea de qué features van a tener más peso a la hora de clasificar servidores entre normales
 # o con fallos
 
 #Figura 3: Heatmap correlaciones entre features
@@ -151,7 +151,7 @@ ax.barh(
 )
 
 ax.set_xlabel('Correlación Pearson con columna Fallo', fontsize=10)
-ax.set_title('Importancia individual de cada sensor', fontsize=13)
+ax.set_title('Importancia individual de cada servidor', fontsize=13)
 ax.set_xlim(0, 1.0)
 # Añadimos valor de la correlación al final de cada barra
 for i, v in enumerate(corr_target.values):
@@ -161,5 +161,5 @@ plt.tight_layout()
 # Guardamos la figura en la carpeta imagenes
 plt.savefig('../imagenes/eda_correlacion_target.png', dpi=150, bbox_inches='tight')
 
-# NOTA: Ahora podemos ver qué features tienen más relación con el nivel de fallo de los sensores, de mayor a menor
+# NOTA: Ahora podemos ver qué features tienen más relación con el nivel de fallo de los servidores, de mayor a menor
 # relación siguen el siguiente orden Tráfico de Red > Cpu Uso > Temperatura > Memoria Uso
