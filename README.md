@@ -197,21 +197,6 @@ El ROC-AUC de 0.9823 mide la capacidad de ordenación del modelo con independenc
 alto pese al solapamiento de las distribuciones. Si el objetivo cambiase y se quisieran menos falsas
 alarmas, bastaría con subir el umbral de decisión por encima de 0.5 sin reentrenar la red.
 
-<!-- ── PENDIENTE: ejecuta el script del baseline y sustituye las X ────────────── -->
-
-### Comparación con un baseline
-
-Para comprobar que la red aporta algo por encima de un modelo lineal simple, se entrenó una
-regresión logística con el mismo split y el mismo tratamiento del desbalanceo:
-
-| Métrica | Regresión logística | MLP |
-|---|---|---|
-| Accuracy | X.XXXX | 0.9187 |
-| F1-score (Fallo) | X.XXXX | 0.7313 |
-| ROC-AUC | X.XXXX | 0.9823 |
-
-<!-- ──────────────────────────────────────────────────────────────────────────── -->
-
 ---
 
 ## Ejemplo de uso para datos nuevos
