@@ -151,7 +151,7 @@ ax.barh(
 )
 
 ax.set_xlabel('Correlación Pearson con columna Fallo', fontsize=10)
-ax.set_title('Importancia individual de cada servidor', fontsize=13)
+ax.set_title('Importancia individual de cada feature', fontsize=13)
 ax.set_xlim(0, 1.0)
 # Añadimos valor de la correlación al final de cada barra
 for i, v in enumerate(corr_target.values):
