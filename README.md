@@ -4,11 +4,9 @@ Hemos creado una red neuronal densa (MLP) para predecir si qué servidores de un
 ficticia TechStream producen fallos o actúan de forma norma. Para ello hemos creado
 un generador de datos sintéticos con las features: cpu_uso, temperatura, memoria_uso y tráfico de red.
 El modelo ha sido entrenado con dichos datos y evaluado con parámetros de distintos niveles de
-actuación de sensores, tanto en fallo como en condiciones normales
+actuación de servidores, tanto en fallo como en condiciones normales
 
 ---
-NOTA: error de nominación. En vez de la palabra servidores he usado la palabra sensores, ruego me disculpen.
-Las descripciones quedan coregidas en este archivo README.md
 
 ## Descripción del problema
 
@@ -22,11 +20,11 @@ Incorporamos además la etiqueta 'Fallo' que indica si el servidor presenta fall
 puesto que se trata de un supervised model
 
 ---
-De nuevo discuplen la errata, sensores -> servidores  
+De nuevo discuplen la errata, servidores -> servidores  
 ## Estructura del repositorio  
 TechStreamPrueba/  
 ├── scripts/  
-│   ├── generador_datos_sensores.py # Generador de datos sintéticos  
+│   ├── generador_datos_servidores.py # Generador de datos sintéticos  
 │   ├── eda.py                      # Análisis exploratorio y visualizaciones  
 │   ├── preprocesamiento.py         # Normalización, split y conversión a tensores  
 │   ├── dataset.py                  # Clase Dataset y DataLoader de PyTorch  
@@ -35,8 +33,8 @@ TechStreamPrueba/
 │   ├── evaluacion.py               # Métricas, matriz de confusión y curva ROC  
 │   └── inferencia.py               # Función de predicción sobre datos nuevos  
 ├── datos/  
-│   ├── datos_sensores.csv  
-│   └── datos_sensores.xlsx  
+│   ├── datos_servidores.csv  
+│   └── datos_servidores.xlsx  
 └── imagenes/  
 ├── eda_histogramas.png  
 ├── eda_boxplots.png  
@@ -64,7 +62,7 @@ TechStreamPrueba/
 Ejecutar los scripts en el siguiente orden
 
 1. Generar los datos sintéticos  
-python generador_datos_sensores.py 
+python generador_datos_servidores.py 
 
 2. Exploratory Data Analisis de los datos generados  
 python eda.py  
@@ -92,14 +90,14 @@ python inferencia.py
 
 ![eda_histogramas](imagenes/eda_histogramas.png)
 
-> Hay buena separación en la distribución de valores en las cuatro features respecto a los dos tipos de sensores
+> Hay buena separación en la distribución de valores en las cuatro features respecto a los dos tipos de servidores
 
 ![eda_boxplots](imagenes/eda_boxplots.png)
 
-> Vemos, al igual que en los histogramas que los valores de los sensores que presentan fallos son mucho más altos
-> que los sensores normales. Todas las medianas de los sensores con fallos son más altas que los normales.
+> Vemos, al igual que en los histogramas que los valores de los servidores que presentan fallos son mucho más altos
+> que los servidores normales. Todas las medianas de los servidores con fallos son más altas que los normales.
 > Podemos ver que hay más diferencia entre las medianas de tráfico de red y cpu_uso con respecto a las otras features.
-> De aquí ya tenemos una idea de qué features van a tener más peso a la hora de clasificar sensores entre normales
+> De aquí ya tenemos una idea de qué features van a tener más peso a la hora de clasificar servidores entre normales
 > o con fallos
 
 ![eda_correlaciones_features](imagenes/eda_correlaciones_features.png)
@@ -110,7 +108,7 @@ python inferencia.py
 
 ![correlacion_target](imagenes/eda_correlacion_target.png)
 
-> Ahora podemos ver qué features tienen más relación con el nivel de fallo de los sensores, de mayor a menor
+> Ahora podemos ver qué features tienen más relación con el nivel de fallo de los servidores, de mayor a menor
 > relación siguen el siguiente orden Tráfico de Red > Cpu Uso > Temperatura > Memoria Uso
 
 ---
