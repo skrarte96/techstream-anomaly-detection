@@ -1,7 +1,7 @@
-# TechStream — Detección de Anomalías en Servidores
+# Stream — Detección de Anomalías en Servidores
 
 Red neuronal densa (MLP) en PyTorch para clasificar servidores de una empresa ficticia,
-TechStream, entre estado normal y estado de fallo. El proyecto incluye un generador de datos
+Stream, entre estado normal y estado de fallo. El proyecto incluye un generador de datos
 sintéticos, análisis exploratorio, pipeline de preprocesamiento, entrenamiento con early stopping,
 evaluación frente a un baseline y una función de inferencia sobre datos nuevos.
 
@@ -28,7 +28,7 @@ infraestructura, donde el evento de interés es minoritario.
 ## Estructura del repositorio
 
 ```
-techstream-anomaly-detection/
+stream-anomaly-detection/
 ├── scripts/
 │   ├── generador_datos_servidores.py   # Generador de datos sintéticos
 │   ├── eda.py                          # Análisis exploratorio y visualizaciones
